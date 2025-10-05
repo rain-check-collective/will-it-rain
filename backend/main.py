@@ -1,52 +1,38 @@
-import json
+import asyncio
 import os
-import requests
 from datetime import datetime
 from dotenv import load_dotenv
-from harmony import BBox
+
+# import project methods
+from get_precip import get_precip, precip_poll_job
 
 def main():
     # load .env for token
     load_dotenv()
     token = os.getenv("EARTHDATA_TOKEN")
 
-    # # Harmony endpoint
-    # url = "https://harmony.earthdata.nasa.gov/async"
+    print("Token loaded?", bool(token))
+    import requests
+    print("GES DISC:", requests.get("https://harmony.earthdata.nasa.gov/ogc-api-edr/1.1.0/collections/C2723754847-GES_DISC/cube").status_code)
+
+    # headers for API calls
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
 
     ## vars for API requests   
     # Default Parameters to show data before user input        
-    latitude = 38.8951
-    longitude = -77.0364
-    date = "2024-12-31"
+    latitude = 13.7563
+    longitude = 100.5018
+    date = "2023-07-15"
     start_time = "00:00:00" # default 12am
-    stop_time = "23:59:59" # default 11:59pm
+    stop_time = "01:00:00" # default 1am
 
-    ## GET requests
-    # GET precipitation via GPM_3IMERGHH v07 via Harmony
-    def get_precip (date, latitude, longitude, start_time, stop_time, token):
-        headers = {
-            "Authorization": f"Bearer {token}"
-        }
-        params = {
-            # "bbox": f"{longitude - 0.05}, {latitude - 0.05}, {longitude + 0.05}, {latitude + 0.05}",
-            "datetime": f"{date}T{start_time}Z/{date}T{stop_time}Z",
-            "parameter-name": "precipitationCal"
-        }
-
-        url = "https://harmony.earthdata.nasa.gov/ogc-api-edr/1.1.0/collections/C2723754847-GES_DISC/cube"
-
-        response = requests.get(url, headers=headers, params=params)
-        data = response.json()
-        job_id = data.get("jobID")
-        print(json.dumps(response.json(), indent=2))
-
-        jobs_url = f"https://harmony.earthdata.nasa.gov/jobs/{job_id}"
-        response = requests.get(jobs_url, headers=headers)
-        print(json.dumps(response.json(), indent=2))
-    
+    ## GET requests    
     print("Fetching IMERG data. Thank you, NASA ❤️") 
-    get_precip(date, latitude, longitude, start_time, stop_time, token)
-
+    job_url = asyncio.run(get_precip(date, latitude, longitude, start_time, stop_time, token))
+    info = asyncio.run(precip_poll_job(job_url, headers))
+    print("Final status:", info.get("status"))
 
 if __name__ == "__main__":
     main()
