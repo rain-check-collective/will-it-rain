@@ -20,6 +20,7 @@ Built in Python with HTML/CSS UI layer.
 - pydantic (works with FastAPI for data validation on routes)
 - Requests (API calls)
 - StringIO (allows pandas to parse streamed CSV returned via API as if it were a file)
+- uvicorn (server to run FastAPI)
 
 ## Current Status
 - ✅ API integration with Iowa State Mesonet
