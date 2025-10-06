@@ -73,6 +73,14 @@ def main(station="KDCA", year="2024", month="12", day="5"):
     windy_pct = calc_wind_average(df_wind)
     humid_pct = calc_humidity_average(df_relh)
 
+    return {
+        "rain": rain_pct,
+        "heat": hot_pct,
+        "cold": cold_pct,
+        "wind": windy_pct,
+        "humidity": humid_pct
+    }
+
     print(f"Rain: {rain_pct}%")
     print(f"Heat: {hot_pct}%")
     print(f"Cold: {cold_pct}%")
