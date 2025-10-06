@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 
 from io import StringIO
-from calculations import (
+from .calculations import (
     calc_precip_average,
     calc_high_temp_average,
     calc_low_temp_average,
@@ -80,12 +80,6 @@ def main(station="KDCA", year="2024", month="12", day="5"):
         "wind": windy_pct,
         "humidity": humid_pct
     }
-
-    print(f"Rain: {rain_pct}%")
-    print(f"Heat: {hot_pct}%")
-    print(f"Cold: {cold_pct}%")
-    print(f"Wind: {windy_pct}%")
-    print(f"Humidity: {humid_pct}%")
 
 if __name__ == "__main__":
     main()
