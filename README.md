@@ -15,7 +15,9 @@ Given time constraints and API reliability issues, the team pivoted to FAA METAR
 Built in Python with HTML/CSS UI layer.
 
 ### Tools Used:
+- FastAPI (routing to connect front end to backend)
 - pandas (CSV parsing and missing-value handling)
+- pydantic (works with FastAPI for data validation on routes)
 - Requests (API calls)
 - StringIO (allows pandas to parse streamed CSV returned via API as if it were a file)
 
