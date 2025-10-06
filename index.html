@@ -32,55 +32,63 @@
       <div class="row justify-content-center mb-4">
         <div class="col-md-8">
           <div class="custom-card">
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                id="cityInput"
-                class="form-control form-control-lg"
-                placeholder="Enter city name..."
-              />
-              <button
-                class="btn btn-search btn-lg"
-                type="button"
-                onclick="searchCity()"
-              >
-                <i class="fas fa-search"></i> Search
-              </button>
+            <form id="weatherForm">
+              <label for="cityStationSelect">Choose City/Station:</label>
+              <select id="cityStationSelect" name="cityStation" required>
+                <!-- Washington DC (Reagan) as default, others alphabetized -->
+                <option value="KDCA" selected>Washington DC (Reagan)</option>
+                <option value="PANC">Anchorage</option>
+                <option value="KATL">Atlanta</option>
+                <option value="KBOS">Boston</option>
+                <option value="KORD">Chicago (O'Hare)</option>
+                <option value="KDFW">Dallas/Fort Worth</option>
+                <option value="KDEN">Denver</option>
+                <option value="KLAS">Las Vegas</option>
+                <option value="KLAX">Los Angeles</option>
+                <option value="KMIA">Miami</option>
+                <option value="KMSP">Minneapolis</option>
+                <option value="KJFK">New York (JFK)</option>
+                <option value="KPHX">Phoenix</option>
+                <option value="Kpdx">Portland</option>
+                <option value="KSFO">San Francisco</option>
+                <option value="KSEA">Seattle</option>
+              </select>
+
+              <label for="yearSelect">Year:</label>
+              <select id="yearSelect" name="year" required></select>
+
+              <label for="monthSelect">Month:</label>
+              <select id="monthSelect" name="month" required>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+
+              <label for="daySelect">Day:</label>
+              <select id="daySelect" name="day" required></select>
+
+              <input type="submit" value="Get Weather" />
+            </form>
+
+            <div id="loadingSpinner">
+              <div class="spinner"></div>
+              <p>Fetching weather data...</p>
             </div>
-            <div class="popular-cities-container">
-              <h2 class="mb-3">Popular Cities:</h2>
-              <div class="d-flex flex-wrap gap-3">
-                <span
-                  class="badge popular-cities p-3"
-                  onclick="searchCity('New York')"
-                  >New York</span
-                >
-                <span
-                  class="badge popular-cities p-3"
-                  onclick="searchCity('London')"
-                  >London</span
-                >
-                <span
-                  class="badge popular-cities p-3"
-                  onclick="searchCity('Paris')"
-                  >Paris</span
-                >
-                <span
-                  class="badge popular-cities p-3"
-                  onclick="searchCity('Singapore')"
-                  >Singapore</span
-                >
-                <span
-                  class="badge popular-cities p-3"
-                  onclick="searchCity('Beijing')"
-                  >Beijing</span
-                >
-                <span
-                  class="badge popular-cities p-3"
-                  onclick="searchCity('Tokyo')"
-                  >Tokyo</span
-                >
-              </div>
+
+            <div id="weatherResult">
+              <p>
+                Select a station and date, then click "Get Weather" to see
+                results.
+              </p>
             </div>
           </div>
         </div>
