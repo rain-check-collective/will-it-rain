@@ -2,6 +2,13 @@ import pandas as pd
 import requests
 
 from io import StringIO
+from calculations import (
+    calc_precip_average,
+    calc_high_temp_average,
+    calc_low_temp_average,
+    calc_wind_average,
+    calc_humidity_average
+)
 
 # Main method with default values 
 def main(station="KDCA", year="2024", month="12", day="5"):
@@ -59,8 +66,18 @@ def main(station="KDCA", year="2024", month="12", day="5"):
     df_wind = df[df['sknt'].notna()]
     df_relh = df[df['relh'].notna()]
 
-    print(f"Valid observations - Precip: {len(df_precip)}, Temp: {len(df_temp)}, Wind: {len(df_wind)}, Humidity: {len(df_relh)}")
-    print(df.head(20))
+    # Calculate percentages for cards
+    rain_pct = calc_precip_average(df_precip)
+    hot_pct = calc_high_temp_average(df_temp)
+    cold_pct = calc_low_temp_average(df_temp)
+    windy_pct = calc_wind_average(df_wind)
+    humid_pct = calc_humidity_average(df_relh)
+
+    print(f"Rain: {rain_pct}%")
+    print(f"Heat: {hot_pct}%")
+    print(f"Cold: {cold_pct}%")
+    print(f"Wind: {windy_pct}%")
+    print(f"Humidity: {humid_pct}%")
 
 if __name__ == "__main__":
     main()
