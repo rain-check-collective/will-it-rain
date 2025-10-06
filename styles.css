@@ -1,9 +1,9 @@
 /* Global Styles */
 body {
-  background: #f5ebdb;
+  background: #F5ECDB;
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
-  color: #072944;
+  color: #00205b;
 }
 
 h1,
@@ -17,7 +17,7 @@ small,
 
 /* Custom Card */
 .custom-card {
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 32, 91, 0.35);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -27,14 +27,14 @@ small,
 
 /* Input Field */
 .form-control {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 32, 91, 0.15);
   border: none;
   color: #fff;
   padding: 0.8rem;
 }
 
 .form-control:focus {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 32, 91, 0.2);
   border: none;
   box-shadow: none;
   color: #fff;
@@ -57,20 +57,21 @@ small,
 .popular-cities {
   cursor: pointer;
   transition: all 0.3s;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 32, 91, 0.2);
   border: none;
   font-size: 0.9rem;
 }
 
 .popular-cities:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 32, 91, 0.1);
+  color: #001e5b;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Weather Icon and its Container */
 .icon-container {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 32, 91, 0.15);
   border-radius: 50%;
   display: inline-block;
   padding: 15px;
@@ -91,7 +92,7 @@ small,
 
 /* Weather Details Card */
 .weather-details .card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 32, 91, 0.1);
   border: none;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
