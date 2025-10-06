@@ -3,35 +3,43 @@ import requests
 
 from io import StringIO
 
-def main():
-    ## vars for API requests   
-    # Default Parameters to show data before user input        
-    station = "KDCA"
-    year = "2024"
-    month = "12"
-    day = "5"
+# Main method with default values 
+def main(station="KDCA", year="2024", month="12", day="5"):
+    # Set number of years to collect for climate averages
+    years_back = 10
+
+    # Empty array to capture API response data
+    all_data = []
 
     # GET weather data (historical FAA METAR observations) via Mesonet API  
-    metar_url = "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py"
-    params = {
-        "station": station,
-        "data": "station,valid,tmpf,relh,sknt,p01i",
-        "year1": year,
-        "month1": month,
-        "day1": day,
-        "year2": year,
-        "month2": month,
-        "day2": day,
-        "tz": "UTC",
-        "format": "onlycomma"
-    }
-
     print("Fetching METAR data ✈️") 
-    res = requests.get(metar_url, params=params)
-    res.raise_for_status()
-    metar_data = res.text
 
-    print("METAR data:", metar_data)
+    # Fetch API data for number of years set in years_back
+    for i in range(years_back + 1):
+        metar_url = "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py"
+        target_year = int(year) - i
+        params = {
+            "station": station,
+            "data": "station,valid,tmpf,relh,sknt,p01i",
+            "year1": str(target_year),
+            "month1": month,
+            "day1": day,
+            "year2": str(target_year),
+            "month2": month,
+            "day2": day,
+            "tz": "UTC",
+            "format": "onlycomma"
+        }
+
+        res = requests.get(metar_url, params=params)
+        res.raise_for_status()
+        all_data.append(res.text)      
+
+    # Combine API response data
+    metar_data = all_data[0]
+    for csv_text in all_data[1:]:
+        lines = csv_text.split('\n')
+        metar_data += '\n' + '\n'.join(lines[1:])
 
     ## data handling via pandas and StringIO
     # DataFrame to hold API values
@@ -50,6 +58,9 @@ def main():
     df_temp = df[df['tmpf'].notna()]
     df_wind = df[df['sknt'].notna()]
     df_relh = df[df['relh'].notna()]
+
+    print(f"Valid observations - Precip: {len(df_precip)}, Temp: {len(df_temp)}, Wind: {len(df_wind)}, Humidity: {len(df_relh)}")
+    print(df.head(20))
 
 if __name__ == "__main__":
     main()
